@@ -6,11 +6,11 @@ using System.Text.Json;
 
 namespace Kronos.Service
 {
-    public class HostedService : BackgroundService
+    public class ServiceBusHostedService : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly ILogger<HostedService> _logger;
+        private readonly ILogger<ServiceBusHostedService> _logger;
 
         private readonly ILogService _logService;
 
@@ -19,7 +19,7 @@ namespace Kronos.Service
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
-        public HostedService(ILogger<HostedService> logger, IServiceProvider serviceProvider)
+        public ServiceBusHostedService(ILogger<ServiceBusHostedService> logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;

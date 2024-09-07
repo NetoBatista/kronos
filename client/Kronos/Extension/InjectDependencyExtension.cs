@@ -9,7 +9,6 @@ namespace Kronos.Extension
         public static void InjectDependency(this IServiceCollection services)
         {
             services.AddScoped<DialogProvider>();
-            services.AddScoped<JavascriptProvider>();
 
             services.AddTransient<IApplicationService, ApplicationService>();
             services.AddTransient<IHealthCheckService, HealthCheckService>();

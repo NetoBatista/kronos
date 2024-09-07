@@ -1,0 +1,67 @@
+﻿<main>
+    <div class="modal-body">
+        <div class="d-flex">
+            <div class="px-3 @GetClassLogType() rounded"></div>
+            <span class="ps-2">@LogTypeTranslate.Translate(LogContent.Type)</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar2 ms-3" viewBox="0 0 16 16">
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
+                <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" />
+            </svg>
+            <span class="ps-2">@LogContent.CreatedAt.ToLocalTime()</span>
+        </div>
+        <div class="mt-4 p-3 bg-black log-content">
+            <span class="text-break text-pre-wrap">@Content</span>
+        </div>
+    </div>
+    <div class="modal-footer justify-content-start">
+        <button type="button" class="btn btn-outline-primary" @onclick="FormatContent">Formatar conteúdo JSON</button>
+    </div>
+</main>
+
+@code {
+    [Parameter]
+    public LogResponseDTO LogContent { get; set; } = default!;
+
+    public string Content { get; set; } = string.Empty;
+
+    JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+    {
+        WriteIndented = true
+    };
+
+    protected override void OnInitialized()
+    {
+        Content = LogContent.Content;
+    }
+
+    private void FormatContent()
+    {
+        try
+        {
+            var jsonElement = JsonSerializer.Deserialize<JsonElement>(Content);
+
+            Content = JsonSerializer.Serialize(jsonElement, jsonOptions);
+
+            StateHasChanged();
+        }
+        catch (Exception)
+        {
+            
+        }
+    }
+
+    private string GetClassLogType()
+    {
+        switch (LogContent.Type)
+        {
+            case LogConstant.Success:
+                return "bg-success";
+            case LogConstant.Error:
+                return "bg-danger";
+            case LogConstant.Info:
+                return "bg-warning";
+            default:
+                return string.Empty;
+        }
+    }
+}

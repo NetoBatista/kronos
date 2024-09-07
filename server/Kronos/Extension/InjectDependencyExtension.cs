@@ -20,7 +20,8 @@ namespace Kronos.Extension
 
         private static void InjectHostedService(IServiceCollection services)
         {
-            services.AddHostedService<HostedService>();
+            services.AddHostedService<ServiceBusHostedService>();
+            services.AddHostedService<HealthCheckHostedService>();
         }
 
         private static void InjectDataBase(IServiceCollection services)

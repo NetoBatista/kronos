@@ -26,12 +26,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-_ = Task.Run(async () =>
-{
-    using var scope = app.Services.CreateScope();
-    var hostedService = scope.ServiceProvider.GetRequiredService<HostedService>();
-    await hostedService.StartAsync(CancellationToken.None);
-});
+KronosServices.StartServices(app);
 
 if (app.Environment.IsDevelopment())
 {
