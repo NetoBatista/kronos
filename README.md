@@ -47,3 +47,5 @@ Essas configurações estão contidas nos arquivos `appsettings.json` e `appsett
 *Observação: caso seja configurado a connection string na varíavel ambiente `CONNECTION_STRING`, a configuração do banco de dados no appsettings.json será igorada*
 
 ## Preview
+https://github.com/user-attachments/assets/e409e819-238d-4a3d-bce4-900ca38aff7a
+
