@@ -1,0 +1,12 @@
+﻿.text-pre-wrap {
+    white-space: pre-wrap;
+}
+
+.log-content {
+    max-height: 400px;
+    overflow: auto;
+}
+
+.log-content span {
+    display: block;
+}
