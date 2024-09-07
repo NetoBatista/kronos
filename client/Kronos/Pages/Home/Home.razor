@@ -1,0 +1,117 @@
+﻿@page "/"
+
+<PageTitle>Kronos - Início</PageTitle>
+
+<div>
+    <div class=" d-flex">
+        <div class="d-flex w-100" style="max-width: 650px">
+            <span class="position-absolute ms-2 d-flex align-items-center" style="height: 38px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                </svg>
+            </span>
+            <input class="form-control" style="padding-left: 2.0rem;" placeholder="Pesquisar" @bind="Request.Content" />
+        </div>
+        <button class="btn btn-primary ms-2" style="min-width: 140px" @onclick="OnClickSearchLog">Pesquisar</button>
+    </div>
+    <div class="custom-filter mt-2 gap-2">
+        <select class="form-select" @bind="Request.ApplicationId">
+            @foreach(var application in Applications)
+            {
+                <option value="@application.Id">@application.Name</option>
+            }
+        </select>
+
+        <select class="form-select" @bind="Request.Type">
+            <option value="">Todos</option>
+            <option value="@LogConstant.Success">@LogTypeTranslate.Translate(LogConstant.Success)</option>
+            <option value="@LogConstant.Info">@LogTypeTranslate.Translate(LogConstant.Info)</option>
+            <option value="@LogConstant.Error">@LogTypeTranslate.Translate(LogConstant.Error)</option>
+        </select>
+
+        <div class="custom-filter-start-date">
+            <label class="form-label ms-2 mb-0 align-self-center">De</label>
+            <input type="date" class="form-control ms-2" @bind="Request.StartDate" />
+        </div>
+
+        <div class="custom-filter-end-date">
+            <label class="form-label ms-2 mb-0 align-self-center">Até</label>
+            <input type="date" class="form-control ms-2" @bind="Request.EndDate" />
+        </div>
+    </div>
+    <div class="overflow-auto mt-4 pe-3" style="height: 72vh;">
+        @foreach(var log in Logs)
+        {
+            <ul class="list-group mb-2">
+                <li role="button" class="list-group-item list-group-item-action" @onclick=@(() => OnClickLog(log))>
+                    <div class="d-flex flex-nowrap">
+                        <div class="px-3 @GetClassLogType(log) rounded"></div>
+                        <span class="ps-2">@log.Type.ToLower()</span>
+                        <span class="ps-2">@log.CreatedAt.ToLocalTime()</span>
+                    </div>
+                    <div class="mt-2 d-flex flex-nowrap">
+                        <span class="text-nowrap overflow-hidden" style="width: calc(100vw - 16rem);">@log.Content</span>
+                    </div>
+                </li>
+            </ul>
+        }
+    </div>
+</div>
+
+@code {
+    private List<LogResponseDTO> Logs = [];
+
+    private LogSearchRequestDTO Request { get; set; } = new();
+
+    private List<ApplicationResponseDTO> Applications = [];
+
+    [Inject]
+    private ILogService LogService { get; set; } = default!;
+
+    [Inject]
+    private IApplicationService ApplicationService { get; set; } = default!;
+
+    [Inject]
+    private JavascriptProvider JavascriptProvider { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentDate = DateTime.UtcNow;
+        Request.StartDate = new DateTime(currentDate.Year, currentDate.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+        Request.EndDate = currentDate;
+        Applications = await ApplicationService.Get();
+        if (Applications.Count > 0)
+        {
+            Request.ApplicationId = Applications.First().Id;
+        }
+    }
+
+    private async Task OnClickSearchLog()
+    {
+        if(Request.ApplicationId == Guid.Empty)
+        {
+            return;
+        }
+        Logs = await LogService.Get(Request);
+    }
+
+    private string GetClassLogType(LogResponseDTO log)
+    {
+        switch (log.Type)
+        {
+            case LogConstant.Success:
+                return "bg-success";
+            case LogConstant.Error:
+                return "bg-danger";
+            case LogConstant.Info:
+                return "bg-warning";
+            default:
+                return string.Empty;
+        }
+    }
+
+    private void OnClickLog(LogResponseDTO log)
+    {
+        JavascriptProvider.CopyToClipBoard(log.Content);
+    }
+}

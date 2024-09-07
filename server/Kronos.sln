@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kronos", "Kronos\Kronos.csproj", "{D49DB501-A52B-4650-A975-DDCC38BD832A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kronos.Domain", "Kronos.Domain\Kronos.Domain.csproj", "{D344265C-1623-45D4-8947-C8BCBEAE432C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kronos.Repository", "Kronos.Repository\Kronos.Repository.csproj", "{B9AA23CD-B317-48DF-A0B5-542573D2D025}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kronos.Service", "Kronos.Service\Kronos.Service.csproj", "{793C4C1B-9150-47A1-8E23-C66506556DA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D49DB501-A52B-4650-A975-DDCC38BD832A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D49DB501-A52B-4650-A975-DDCC38BD832A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D49DB501-A52B-4650-A975-DDCC38BD832A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D49DB501-A52B-4650-A975-DDCC38BD832A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D344265C-1623-45D4-8947-C8BCBEAE432C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D344265C-1623-45D4-8947-C8BCBEAE432C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D344265C-1623-45D4-8947-C8BCBEAE432C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D344265C-1623-45D4-8947-C8BCBEAE432C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9AA23CD-B317-48DF-A0B5-542573D2D025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9AA23CD-B317-48DF-A0B5-542573D2D025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9AA23CD-B317-48DF-A0B5-542573D2D025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9AA23CD-B317-48DF-A0B5-542573D2D025}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793C4C1B-9150-47A1-8E23-C66506556DA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793C4C1B-9150-47A1-8E23-C66506556DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793C4C1B-9150-47A1-8E23-C66506556DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793C4C1B-9150-47A1-8E23-C66506556DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90A56A9B-CA01-4E55-A1E8-43AE99559035}
+	EndGlobalSection
+EndGlobal

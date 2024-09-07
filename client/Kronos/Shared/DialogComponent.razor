@@ -1,0 +1,55 @@
+﻿
+<div class="modal fade @ClassShowModal z-3">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">@Title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="Close"></button>
+            </div>
+            @Content
+        </div>
+
+    </div>
+</div>
+
+@if (Show)
+{
+    <div class="modal-backdrop fade show z-2"></div>
+}
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? Content { get; set; } = default!;
+
+    private string ClassShowModal => Show ? "show d-block" : string.Empty;
+
+    private bool Show { get; set; }
+
+    [Inject]
+    private DialogProvider DialogProvider { get; set; } = default!;
+
+
+    protected override void OnInitialized()
+    {
+        DialogProvider.Open += Open;
+        DialogProvider.Close += Close;
+    }
+
+    private void Open(string title, RenderFragment content)
+    {
+        Title = title;
+        Content = content;
+        Show = true;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        Show = false;
+        Content = null;
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kronos</title>
+    <base href="/" />
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="Kronos.styles.css" rel="stylesheet" />
+</head>
+
+<body data-bs-theme="dark">
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script type="text/javascript">
+        async function loadAppSettings() {
+            try {
+                const response = await fetch('/appsettings.json');
+                if (!response.ok) {
+                    throw new Error('Could not load appsettings.json');
+                }
+                window.appSettings = await response.json();
+            } catch (error) {
+                console.error('Error loading appsettings.json:', error);
+            }
+        }
+        loadAppSettings();
+    </script>
+</body>
+
+</html>
