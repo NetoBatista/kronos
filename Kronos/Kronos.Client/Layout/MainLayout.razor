@@ -17,3 +17,12 @@
         </article>
     </main>
 </div>
+
+@code {
+    [Inject]
+    private NavigationManager Navigation { get; set; } = default!;
+    protected override void OnInitialized()
+    {
+        Domain.Configuration.KronosConfigurationAPI.BaseAddress = Navigation.BaseUri;
+    }
+}

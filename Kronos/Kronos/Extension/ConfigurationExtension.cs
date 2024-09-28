@@ -8,7 +8,6 @@ namespace Kronos.Extension
         {
             ConfigureKronosContext(configuration);
             ConfigureKronosQueue(configuration);
-            ConfigureKronosAPI(configuration);
         }
 
         private static void ConfigureKronosContext(IConfiguration configuration)
@@ -24,12 +23,6 @@ namespace Kronos.Extension
             var queueName = configuration.GetSection("Queue").GetSection("ServiceBus").GetSection("Name").Value;
             KronosQueueConfiguration.ConnectionString = connectionString ?? string.Empty;
             KronosQueueConfiguration.QueueName = queueName ?? string.Empty;
-        }
-
-        private static void ConfigureKronosAPI(IConfiguration configuration)
-        {
-            var baseAddress = Environment.GetEnvironmentVariable("KRONOS_API");
-            KronosConfigurationAPI.BaseAddress = baseAddress ?? configuration.GetSection("KronosApi").Value ?? string.Empty;
         }
     }
 }
