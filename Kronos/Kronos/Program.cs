@@ -38,7 +38,6 @@ else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
-    app.UseHttpsRedirection();
 }
 
 app.UseCors("*");

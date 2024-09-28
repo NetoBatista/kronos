@@ -28,7 +28,8 @@ namespace Kronos.Extension
 
         private static void ConfigureKronosAPI(IConfiguration configuration)
         {
-            KronosConfigurationAPI.BaseAddress = configuration.GetSection("KronosApi").Value ?? string.Empty;
+            var baseAddress = Environment.GetEnvironmentVariable("KRONOS_API");
+            KronosConfigurationAPI.BaseAddress = baseAddress ?? configuration.GetSection("KronosApi").Value ?? string.Empty;
         }
     }
 }
