@@ -1,0 +1,85 @@
+﻿@page "/healthcheck"
+
+<PageTitle>Kronos - HealthCheck</PageTitle>
+
+<div>
+    <h4>Confira os últimos logs relacionados a saúde de suas aplicações</h4>
+
+    <div class="d-flex mt-4">
+        <button class="btn btn-primary" disabled="@IsLoading" @onclick="CheckAllApplications">Executar agora</button>
+        <div class="ms-3 spinner-border text-primary @ClassLoading" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+    </div>
+
+    <div class="overflow-auto mt-4" style="height: 72vh;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var healthcheck in HealthChecks)
+                {
+                    <tr>
+                        <td>@GetApplicationName(healthcheck.ApplicationId)</td>
+                        <td>
+                            @if (healthcheck.Success)
+                            {
+                                <div class="d-flex">
+                                    <div class="px-3 bg-success rounded"></div>
+                                    <span class="ps-2">Sucesso</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex">
+                                    <div class="px-3 bg-danger rounded"></div>
+                                    <span class="ps-2">Falha</span>
+                                </div>
+                            }
+                        </td>
+                        <td>@healthcheck.CreatedAt.ToLocalTime()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@code {
+    private HealthCheckData HealthCheckData = new();
+
+    private ApplicationData ApplicationData = new();
+
+    List<HealthCheckResponseDTO> HealthChecks = [];
+
+    List<ApplicationResponseDTO> Applications = [];
+
+    private string ClassLoading => IsLoading ? string.Empty : "d-none";
+
+    private bool IsLoading { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        HealthChecks = await HealthCheckData.Get();
+        Applications = await ApplicationData.Get();
+    }
+
+    private string GetApplicationName(Guid applicationId)
+    {
+        return Applications.First(x => x.Id == applicationId).Name;
+    }
+
+    private async Task CheckAllApplications()
+    {
+        IsLoading = true;
+        await HealthCheckData.CheckAllApplications();
+        HealthChecks = await HealthCheckData.Get();
+        IsLoading = false;
+    }
+}
