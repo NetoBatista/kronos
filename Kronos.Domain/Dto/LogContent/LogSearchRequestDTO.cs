@@ -5,7 +5,7 @@ namespace Kronos.Domain.Dto.LogContent
 {
     public class LogSearchRequestDTO
     {
-        public Guid ApplicationId { get; set; }
+        public Guid? ApplicationId { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string? Content { get; set; }

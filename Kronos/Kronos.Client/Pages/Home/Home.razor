@@ -16,6 +16,7 @@
     </div>
     <div class="custom-filter mt-2 gap-2">
         <select class="form-select" @bind="Request.ApplicationId">
+            <option value="" selected>Todos</option>
             @foreach(var application in _applications)
             {
                 <option value="@application.Id">@application.Name</option>
@@ -78,18 +79,11 @@
         Request.StartDate = new DateTime(currentDate.Year, currentDate.Month, 1, 0, 0, 0, DateTimeKind.Utc);
         Request.EndDate = currentDate;
         _applications = await _applicationHandler.Get();
-        if (_applications.Count > 0)
-        {
-            Request.ApplicationId = _applications.First().Id;
-        }
+        await OnClickSearchLog();
     }
 
     private async Task OnClickSearchLog()
     {
-        if(Request.ApplicationId == Guid.Empty)
-        {
-            return;
-        }
         _logs = await _logHandler.Get(Request);
     }
 

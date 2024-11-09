@@ -18,7 +18,11 @@ namespace Kronos.Repository
 
         public Task<List<Log>> Get(LogSearchRequestDTO request)
         {
-            var query = _context.Log.Where(x => x.ApplicationId == request.ApplicationId);
+            var query = _context.Log.AsQueryable();
+            if (request.ApplicationId != null)
+            {
+                query = query.Where(x => x.ApplicationId == request.ApplicationId);
+            }
             if (!string.IsNullOrEmpty(request.Content))
             {
                 query = query.Where(x => x.Content.ToUpper().Contains(request.Content.ToUpper()));
@@ -34,8 +38,8 @@ namespace Kronos.Repository
             }
             if (request.EndDate != null)
             {
-                var EndDate = new DateTime(request.EndDate.Value.Year, request.EndDate.Value.Month, request.EndDate.Value.Day, 23, 59, 59, DateTimeKind.Utc);
-                query = query.Where(x => x.CreatedAt <= EndDate);
+                var endDate = new DateTime(request.EndDate.Value.Year, request.EndDate.Value.Month, request.EndDate.Value.Day, 23, 59, 59, DateTimeKind.Utc);
+                query = query.Where(x => x.CreatedAt <= endDate);
             }
             return query.OrderByDescending(x => x.CreatedAt).Take(100).ToListAsync();
         }
