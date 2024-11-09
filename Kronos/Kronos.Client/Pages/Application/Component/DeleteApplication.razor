@@ -36,7 +36,7 @@
     [Parameter]
     public EventCallback SuccessCallback { get; set; } = default!;
 
-    private ApplicationData ApplicationData = new();
+    private readonly ApplicationHandler _applicationHandle = new();
 
     private bool IsLoading { get; set; }
 
@@ -46,7 +46,7 @@
     private async Task OnClickRemoveApplication()
     {
         IsLoading = true;
-        await ApplicationData.Delete(Request.Id);
+        await _applicationHandle.Delete(Request.Id);
         IsLoading = false;
         await SuccessCallback.InvokeAsync();
         DialogProvider.CloseDialog();

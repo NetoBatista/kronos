@@ -41,15 +41,15 @@
     [Inject]
     private DialogProvider DialogProvider { get; set; } = default!;
 
-    private ApplicationData ApplicationData = new();
+    private readonly ApplicationHandler _applicationHandle = new();
 
-    private List<ApplicationResponseDTO> Applications = [];
+    private List<ApplicationResponseDTO> _applications = [];
 
     private string SearchContent { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        Applications = await ApplicationData.Get();
+        _applications = await _applicationHandle.Get();
     }
 
     private void OnInputEvent(ChangeEventArgs eventArgs)
@@ -61,17 +61,17 @@
     {
         if (string.IsNullOrEmpty(SearchContent))
         {
-            return Applications;
+            return _applications;
         }
 
-        return Applications.Where(x => x.Name.ToUpper().Contains(SearchContent.ToUpper())).ToList();
+        return _applications.Where(x => x.Name.ToUpper().Contains(SearchContent.ToUpper())).ToList();
     }
 
     private void OnClickCreateApplication()
     {
         void SuccessCallback(ApplicationResponseDTO application)
         {
-            Applications.Insert(0, application);
+            _applications.Insert(0, application);
         }
 
         RenderFragment content = __builder =>
@@ -85,9 +85,9 @@
     {
         void SuccessCallback(ApplicationResponseDTO updatedApplication)
         {
-            var indexApplication = Applications.IndexOf(application);
-            Applications.RemoveAt(indexApplication);
-            Applications.Insert(indexApplication, updatedApplication);
+            var indexApplication = _applications.IndexOf(application);
+            _applications.RemoveAt(indexApplication);
+            _applications.Insert(indexApplication, updatedApplication);
         }
 
         var request = AutoMapper.Map<ApplicationUpdateRequestDTO>(application)!;
@@ -103,8 +103,8 @@
     {
         void SuccessCallback()
         {
-            var indexApplication = Applications.IndexOf(application);
-            Applications.RemoveAt(indexApplication);
+            var indexApplication = _applications.IndexOf(application);
+            _applications.RemoveAt(indexApplication);
         }
 
         RenderFragment content = __builder =>

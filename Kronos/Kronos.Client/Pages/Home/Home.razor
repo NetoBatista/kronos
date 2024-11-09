@@ -16,7 +16,8 @@
     </div>
     <div class="custom-filter mt-2 gap-2">
         <select class="form-select" @bind="Request.ApplicationId">
-            @foreach(var application in Applications)
+            <option value="" selected>Todos</option>
+            @foreach(var application in _applications)
             {
                 <option value="@application.Id">@application.Name</option>
             }
@@ -40,7 +41,7 @@
         </div>
     </div>
     <div class="overflow-auto mt-4 pe-3" style="height: 72vh;">
-        @foreach(var log in Logs)
+        @foreach(var log in _logs)
         {
             <ul class="list-group mb-2">
                 <li role="button" class="list-group-item list-group-item-action" @onclick=@(() => OnClickLog(log))>
@@ -59,15 +60,15 @@
 </div>
 
 @code {
-    private List<LogResponseDTO> Logs = [];
+    private List<LogResponseDTO> _logs = [];
 
     private LogSearchRequestDTO Request { get; set; } = new();
 
-    private List<ApplicationResponseDTO> Applications = [];
+    private List<ApplicationResponseDTO> _applications = [];
 
-    private LogData LogData = new();
+    private readonly LogHandler _logHandler = new();
 
-    private ApplicationData ApplicationData = new();
+    private readonly ApplicationHandler _applicationHandler = new();
 
     [Inject]
     private DialogProvider DialogProvider { get; set; } = default!;
@@ -77,20 +78,13 @@
         var currentDate = DateTime.UtcNow;
         Request.StartDate = new DateTime(currentDate.Year, currentDate.Month, 1, 0, 0, 0, DateTimeKind.Utc);
         Request.EndDate = currentDate;
-        Applications = await ApplicationData.Get();
-        if (Applications.Count > 0)
-        {
-            Request.ApplicationId = Applications.First().Id;
-        }
+        _applications = await _applicationHandler.Get();
+        await OnClickSearchLog();
     }
 
     private async Task OnClickSearchLog()
     {
-        if(Request.ApplicationId == Guid.Empty)
-        {
-            return;
-        }
-        Logs = await LogData.Get(Request);
+        _logs = await _logHandler.Get(Request);
     }
 
     private string GetClassLogType(LogResponseDTO log)

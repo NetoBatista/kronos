@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var healthcheck in HealthChecks)
+                @foreach (var healthcheck in _healthChecks)
                 {
                     <tr>
                         <td>@GetApplicationName(healthcheck.ApplicationId)</td>
@@ -52,13 +52,13 @@
 </div>
 
 @code {
-    private HealthCheckData HealthCheckData = new();
+    private readonly HealthCheckHandler _healthCheckHandler = new();
 
-    private ApplicationData ApplicationData = new();
+    private readonly ApplicationHandler _applicationHandle = new();
 
-    List<HealthCheckResponseDTO> HealthChecks = [];
+    List<HealthCheckResponseDTO> _healthChecks = [];
 
-    List<ApplicationResponseDTO> Applications = [];
+    List<ApplicationResponseDTO> _applications = [];
 
     private string ClassLoading => IsLoading ? string.Empty : "d-none";
 
@@ -66,20 +66,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-        HealthChecks = await HealthCheckData.Get();
-        Applications = await ApplicationData.Get();
+        _healthChecks = await _healthCheckHandler.Get();
+        _applications = await _applicationHandle.Get();
     }
 
     private string GetApplicationName(Guid applicationId)
     {
-        return Applications.First(x => x.Id == applicationId).Name;
+        return _applications.First(x => x.Id == applicationId).Name;
     }
 
     private async Task CheckAllApplications()
     {
         IsLoading = true;
-        await HealthCheckData.CheckAllApplications();
-        HealthChecks = await HealthCheckData.Get();
+        await _healthCheckHandler.CheckAllApplications();
+        _healthChecks = await _healthCheckHandler.Get();
         IsLoading = false;
     }
 }

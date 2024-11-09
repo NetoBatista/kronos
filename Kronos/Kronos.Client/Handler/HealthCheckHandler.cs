@@ -2,14 +2,14 @@
 using Kronos.Domain.Dto.HealthCheck;
 using System.Net.Http.Json;
 
-namespace Kronos.Client.Data
+namespace Kronos.Client.Handler
 {
-    public class HealthCheckData
+    public class HealthCheckHandler
     {
         private readonly HttpClient _httpClient;
         private readonly string _requestUri = "api/v1/HealthCheck";
 
-        public HealthCheckData()
+        public HealthCheckHandler()
         {
             _httpClient = new HttpClient
             {
