@@ -3,14 +3,14 @@ using Kronos.Domain.Dto.LogContent;
 using Kronos.Domain.Helper;
 using System.Net.Http.Json;
 
-namespace Kronos.Client.Data
+namespace Kronos.Client.Handler
 {
-    public class LogData
+    public class LogHandler
     {
         private readonly HttpClient _httpClient;
         private readonly string _requestUri = "api/v1/Log";
 
-        public LogData()
+        public LogHandler()
         {
             _httpClient = new HttpClient
             {

@@ -25,7 +25,7 @@
     [Parameter]
     public EventCallback<ApplicationResponseDTO> SuccessCallback { get; set; } = default!;
 
-    private ApplicationData ApplicationData = new();
+    private readonly ApplicationHandler _applicationHandle = new();
 
     private ApplicationCreateRequestDTO Request { get; set; } = new();
 
@@ -40,7 +40,7 @@
         {
             return;
         }
-        var response = await ApplicationData.Create(Request);
+        var response = await _applicationHandle.Create(Request);
         if(response != null)
         {
             await SuccessCallback.InvokeAsync(response);

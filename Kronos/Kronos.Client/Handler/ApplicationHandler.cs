@@ -2,14 +2,14 @@
 using Kronos.Domain.Dto.Application;
 using System.Net.Http.Json;
 
-namespace Kronos.Client.Data
+namespace Kronos.Client.Handler
 {
-    public class ApplicationData
+    public class ApplicationHandler
     {
         private readonly HttpClient _httpClient;
         private readonly string _requestUri = "api/v1/Application";
 
-        public ApplicationData()
+        public ApplicationHandler()
         {
             _httpClient = new HttpClient
             {
