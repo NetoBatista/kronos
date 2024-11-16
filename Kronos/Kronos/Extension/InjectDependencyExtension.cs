@@ -1,5 +1,6 @@
 ﻿using Kronos.Domain.Configuration;
 using Kronos.Domain.Entity;
+using Kronos.Domain.Interface.Provider;
 using Kronos.Domain.Interface.Service;
 using Kronos.Domain.Interfaces.Repository;
 using Kronos.Provider;
@@ -23,7 +24,9 @@ namespace Kronos.Extension
 
         private static void InjectProvider(IServiceCollection services)
         {
-            services.AddSingleton<DialogProvider>();
+            services.AddSingleton<IDialogProvider, DialogProvider>();
+            services.AddScoped<IJavascriptProvider, JavascriptProvider>();
+            services.AddScoped<IChartProvider, ChartProvider>();
         }
 
         private static void InjectHostedService(IServiceCollection services)
@@ -54,6 +57,7 @@ namespace Kronos.Extension
             services.AddTransient<IApplicationService, ApplicationService>();
             services.AddTransient<IHealthCheckService, HealthCheckService>();
             services.AddTransient<ILogService, LogService>();
+            services.AddTransient<IStatisticService, StatisticService>();
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Kronos.Domain.Interface.Provider;
+using Microsoft.AspNetCore.Components;
 
 namespace Kronos.Provider
 {
-    public class DialogProvider
+    public class DialogProvider :IDialogProvider
     {
-        public event Action<string, RenderFragment>? Open;
-        public event Action? Close;
+        private event Action<string, RenderFragment>? Open;
+        private event Action? Close;
+        
         public void OpenDialog(string title, RenderFragment content)
         {
             Open?.Invoke(title, content);
@@ -13,6 +15,12 @@ namespace Kronos.Provider
         public void CloseDialog()
         {
             Close?.Invoke();
+        }
+
+        public void Initialize(Action<string, RenderFragment>? open, Action? close)
+        {
+            Open += open;
+            Close += close;
         }
     }
 }

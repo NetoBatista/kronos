@@ -20,7 +20,7 @@
 
 @code {
     [Inject]
-    private DialogProvider DialogProvider { get; set; } = default!;
+    private IDialogProvider DialogProvider { get; set; } = default!;
 
     [Parameter]
     public EventCallback<ApplicationResponseDTO> SuccessCallback { get; set; } = default!;

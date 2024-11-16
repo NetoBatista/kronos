@@ -1,4 +1,5 @@
 ﻿using Kronos.Domain.Dto.LogContent;
+using Kronos.Domain.Dto.Statistic;
 using Kronos.Domain.Entity;
 using Kronos.Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,19 @@ namespace Kronos.Repository
                 query = query.Where(x => x.CreatedAt <= endDate);
             }
             return query.OrderByDescending(x => x.CreatedAt).Take(100).ToListAsync();
+        }
+        
+        public Task<List<Log>> Get(StatisticRequestDto request)
+        {
+            var query = _context.Log.Include(x => x.ApplicationNavigation).AsQueryable();
+            
+            var startDate = new DateTime(request.StartDate.Year, request.StartDate.Month, request.StartDate.Day, 0, 0, 0, DateTimeKind.Utc);
+            query = query.Where(x => x.CreatedAt >= startDate);
+            
+            var endDate = new DateTime(request.EndDate.Year, request.EndDate.Month, request.EndDate.Day, 23, 59, 59, DateTimeKind.Utc);
+            query = query.Where(x => x.CreatedAt <= endDate);
+            
+            return query.ToListAsync();
         }
     }
 }

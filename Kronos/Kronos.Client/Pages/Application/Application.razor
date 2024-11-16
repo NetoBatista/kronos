@@ -10,12 +10,15 @@
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                 </svg>
             </span>
-            <input class="form-control" style="padding-left: 2.0rem;" placeholder="Pesquisar" @oninput="OnInputEvent" />
+            <input class="form-control" style="padding-left: 2.0rem;" disabled="@IsLoading" placeholder="Pesquisar" @oninput="OnInputEvent" />
         </div>
-        <button class="btn btn-primary ms-2" style="min-width: 140px" @onclick="OnClickCreateApplication">Criar aplicação</button>
+        <button class="btn btn-primary ms-2" style="min-width: 140px" disabled="@IsLoading" @onclick="OnClickCreateApplication">Criar aplicação</button>
+    </div>
+    <div class="mt-4">
+        <LoadingComponent IsInLineProgress="true" Visible="IsLoading"></LoadingComponent>
     </div>
     <div class="overflow-auto" style="height: 80vh;">
-        <div class="d-flex flex-wrap mt-4 gap-2">
+        <div class="d-flex flex-wrap mt-2 gap-2">
             @foreach (var application in FilteredApplications())
             {
                 <div class="card" style="width: 22rem;">
@@ -23,10 +26,10 @@
                         <h5 class="card-title text-nowrap overflow-hidden">@application.Name</h5>
                         <span class="card-subtitle mb-2 text-body-secondary"># @application.Key</span>
                         <div class="d-flex mt-2 gap-4">
-                            <button class="btn btn-outline-danger mw-100" style="width: 100%" @onclick=@(() => OnClickDeleteApplication(application))>
+                            <button class="btn btn-outline-danger mw-100" disabled="@IsLoading" style="width: 100%" @onclick=@(() => OnClickDeleteApplication(application))>
                                 Excluir
                             </button>
-                            <button class="btn btn-outline-primary mw-100" style="width: 100%" @onclick=@(() => OnClickUpdateApplication(application))>
+                            <button class="btn btn-outline-primary mw-100" disabled="@IsLoading" style="width: 100%" @onclick=@(() => OnClickUpdateApplication(application))>
                                 Editar
                             </button>
                         </div>
@@ -39,17 +42,21 @@
 
 @code {
     [Inject]
-    private DialogProvider DialogProvider { get; set; } = default!;
+    private IDialogProvider DialogProvider { get; set; } = default!;
 
     private readonly ApplicationHandler _applicationHandle = new();
 
     private List<ApplicationResponseDTO> _applications = [];
 
     private string SearchContent { get; set; } = string.Empty;
+    
+    public bool IsLoading { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        IsLoading = true;
         _applications = await _applicationHandle.Get();
+        IsLoading = false;
     }
 
     private void OnInputEvent(ChangeEventArgs eventArgs)
