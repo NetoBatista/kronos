@@ -74,7 +74,7 @@
     private readonly ApplicationHandler _applicationHandler = new();
 
     [Inject]
-    private DialogProvider DialogProvider { get; set; } = default!;
+    private IDialogProvider DialogProvider { get; set; } = default!;
     
     public bool IsLoading { get; set; }
 

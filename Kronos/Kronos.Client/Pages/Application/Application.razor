@@ -42,7 +42,7 @@
 
 @code {
     [Inject]
-    private DialogProvider DialogProvider { get; set; } = default!;
+    private IDialogProvider DialogProvider { get; set; } = default!;
 
     private readonly ApplicationHandler _applicationHandle = new();
 

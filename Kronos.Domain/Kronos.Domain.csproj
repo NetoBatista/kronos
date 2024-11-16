@@ -8,6 +8,7 @@
 
   <ItemGroup>
 	  <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.18.1" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.8" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
 		  <PrivateAssets>all</PrivateAssets>

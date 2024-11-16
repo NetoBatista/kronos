@@ -1,5 +1,4 @@
-﻿
-<div class="modal fade @ClassShowModal z-3">
+﻿<div class="modal fade @ClassShowModal z-3">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,13 +27,11 @@
     private bool Show { get; set; }
 
     [Inject]
-    private DialogProvider DialogProvider { get; set; } = default!;
-
-
+    private IDialogProvider DialogProvider { get; set; } = default!;
+    
     protected override void OnInitialized()
     {
-        DialogProvider.Open += Open;
-        DialogProvider.Close += Close;
+        DialogProvider.Initialize(Open, Close);
     }
 
     private void Open(string title, RenderFragment content)
