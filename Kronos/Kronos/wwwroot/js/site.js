@@ -4,6 +4,12 @@
         if(ctx == null){
             return;
         }
+
+        const existingChart = Chart.getChart(ctx);
+
+        if (existingChart) {
+            existingChart.destroy();
+        }
         
         return new Chart(ctx, {
             type: chartModel.type,
