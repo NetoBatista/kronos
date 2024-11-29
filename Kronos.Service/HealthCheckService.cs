@@ -10,11 +10,13 @@ namespace Kronos.Service
     {
         private readonly IHealthCheckRepository _repository;
         private readonly IApplicationRepository _applicationRepository;
+        private readonly HttpClient _httpClient;
 
         public HealthCheckService(IHealthCheckRepository repository, IApplicationRepository applicationRepository)
         {
             _repository = repository;
             _applicationRepository = applicationRepository;
+            _httpClient = new HttpClient();
         }
 
         public async Task<HealthCheckResponseDTO> Create(HealthCheckCreateRequestDTO request)
@@ -43,13 +45,8 @@ namespace Kronos.Service
                 {
                     continue;
                 }
-                if (healthCheckUri == null)
-                {
-                    continue;
-                }
-
-                var client = new HttpClient();
-                var response = await client.GetAsync(healthCheckUri);
+                
+                var response = await _httpClient.GetAsync(healthCheckUri);
                 var healthCheck = new HealthCheck
                 {
                     ApplicationId = application.Id,
