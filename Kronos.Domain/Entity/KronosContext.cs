@@ -105,5 +105,12 @@ namespace Kronos.Domain.Entity
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await base.SaveChangesAsync(cancellationToken);
+            ChangeTracker.Clear();
+            return result;
+        }
     }
 }
