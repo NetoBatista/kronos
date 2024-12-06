@@ -63,7 +63,7 @@
     {
         var currentDate = DateTime.UtcNow;
         _startDate = new DateTime(currentDate.Year, currentDate.Month, 1);
-        _endDate = new DateTime(currentDate.Year, currentDate.Month + 1, 1, 23, 59 ,59).AddDays(-1);
+        _endDate = new DateTime(currentDate.Year, currentDate.Month, 1, 23, 59 ,59).AddMonths(1).AddDays(-1);
     }
     
     protected override Task OnAfterRenderAsync(bool firstRender)
