@@ -19,8 +19,12 @@ namespace Kronos.Extension
 
         private static void ConfigureKronosQueue(IConfiguration configuration)
         {
-            var connectionString = configuration.GetSection("Queue").GetSection("ServiceBus").GetSection("ConnectionString").Value;
-            var queueName = configuration.GetSection("Queue").GetSection("ServiceBus").GetSection("Name").Value;
+            var connectionString = Environment.GetEnvironmentVariable("SERVICEBUS_CONNECTION_STRING");
+            connectionString ??= configuration.GetSection("Queue").GetSection("ServiceBus").GetSection("ConnectionString").Value;
+
+            var queueName = Environment.GetEnvironmentVariable("SERVICEBUS_QUEUE");
+            queueName ??= configuration.GetSection("Queue").GetSection("ServiceBus").GetSection("Name").Value;
+
             KronosQueueConfiguration.ConnectionString = connectionString ?? string.Empty;
             KronosQueueConfiguration.QueueName = queueName ?? string.Empty;
         }
