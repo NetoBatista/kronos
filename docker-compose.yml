@@ -7,28 +7,31 @@ services:
       POSTGRES_DB: kronos
     ports:
       - "54321:5432"
-    networks:
-      - kronos_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       retries: 5
       start_period: 30s
 
-  app:
+  server:
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile
     environment:
-      - CONNECTION_STRING=Host=postgres;Database=kronos;Username=postgres;Password=Senha123!
+      - CONNECTION_STRING=Host=172.17.0.1;Database=titan;Username=postgres;Password=Senha123!
     ports:
-      - "8006:8080"
-    networks:
-      - kronos_network
+      - "5001:8080"
     depends_on:
       postgres:
         condition: service_healthy
-        
-networks:
-  kronos_network:
-    driver: bridge
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        URL_API: http://localhost:5001/api/v1
+    ports:
+      - "8001:80"
+    depends_on:
+      - server

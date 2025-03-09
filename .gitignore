@@ -12,7 +12,8 @@ flutter_export_environment.sh
 temp
 output
 
-.vscode/
+.vs
+.vscode
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
