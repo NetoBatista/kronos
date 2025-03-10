@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kronos/app/core/constant/log_type_constant.dart';
-import 'package:kronos/app/core/model/log/log_response_model.dart';
+import 'package:kronos/app/core/model/log_model/log_response_model.dart';
 import 'package:kronos/app/core/provider/navigator_provider.dart';
 import 'package:kronos/app/module/home/component/home_log_detail_component.dart';
 import 'package:kronos/app/module/home/controller/home_controller.dart';

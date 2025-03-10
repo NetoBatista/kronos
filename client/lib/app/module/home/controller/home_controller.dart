@@ -1,8 +1,8 @@
 import 'package:kronos/app/core/interface/iapplication_service.dart';
 import 'package:kronos/app/core/interface/ilog_service.dart';
 import 'package:kronos/app/core/model/application/application_response.dart';
-import 'package:kronos/app/core/model/log/log_request_model.dart';
-import 'package:kronos/app/core/model/log/log_response_model.dart';
+import 'package:kronos/app/core/model/log_model/log_request_model.dart';
+import 'package:kronos/app/core/model/log_model/log_response_model.dart';
 import 'package:kronos/app/shared/state/state_shared.dart';
 import 'package:flutter/material.dart';
 

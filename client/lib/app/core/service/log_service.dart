@@ -1,7 +1,7 @@
 import 'package:kronos/app/core/interface/ilog_service.dart';
 import 'package:kronos/app/core/interface/irequest_service.dart';
-import 'package:kronos/app/core/model/log/log_request_model.dart';
-import 'package:kronos/app/core/model/log/log_response_model.dart';
+import 'package:kronos/app/core/model/log_model/log_request_model.dart';
+import 'package:kronos/app/core/model/log_model/log_response_model.dart';
 import 'package:kronos/app/shared/tool/result.dart';
 import 'package:kronos/app/shared/util/date_util.dart';
 import 'package:kronos/app/shared/util/url_util.dart';

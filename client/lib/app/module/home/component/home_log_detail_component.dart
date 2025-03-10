@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:kronos/app/core/constant/log_type_constant.dart';
-import 'package:kronos/app/core/model/log/log_response_model.dart';
+import 'package:kronos/app/core/model/log_model/log_response_model.dart';
 import 'package:kronos/app/module/home/controller/home_controller.dart';
 import 'package:kronos/app/shared/component/custom_indicator.dart';
 import 'package:kronos/app/shared/util/date_util.dart';

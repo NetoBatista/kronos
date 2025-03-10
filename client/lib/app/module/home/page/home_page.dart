@@ -1,5 +1,5 @@
 import 'package:kronos/app/core/constant/log_type_constant.dart';
-import 'package:kronos/app/core/model/log/log_request_model.dart';
+import 'package:kronos/app/core/model/log_model/log_request_model.dart';
 import 'package:kronos/app/core/provider/buildcontext_provider.dart';
 import 'package:kronos/app/core/provider/dependency_provider.dart';
 import 'package:kronos/app/module/app/page/app_page.dart';
