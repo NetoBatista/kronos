@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kronos/app/core/provider/buildcontext_provider.dart';
 import 'package:kronos/app/core/provider/dependency_provider.dart';
@@ -60,28 +59,19 @@ class _StatisticPageState extends State<StatisticPage> {
                   Icon(
                     Icons.date_range_outlined,
                     size: 32,
-                    color:
-                        controller.value.isLoading
-                            ? Colors.grey
-                            : Colors.blue[900],
+                    color: controller.value.isLoading ? Colors.grey : null,
                   ),
                   Text(
                     '${DateUtil.getMonth(controller.currentDate.month - 1)} de ${controller.currentDate.year}',
                     style: TextStyle(
                       fontSize: 22,
-                      color:
-                          controller.value.isLoading
-                              ? Colors.grey
-                              : Colors.blue[900],
+                      color: controller.value.isLoading ? Colors.grey : null,
                     ),
                   ),
                   Icon(
                     Icons.change_circle_outlined,
                     size: 32,
-                    color:
-                        controller.value.isLoading
-                            ? Colors.grey
-                            : Colors.blue[900],
+                    color: controller.value.isLoading ? Colors.grey : null,
                   ),
                 ],
               ),
