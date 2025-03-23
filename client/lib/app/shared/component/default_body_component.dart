@@ -20,8 +20,9 @@ class DefaultBodyComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+      body: Container(
         padding: padding ?? const EdgeInsets.all(32),
+        width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           controller: scrollController,
           child: Column(

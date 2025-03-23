@@ -7,14 +7,14 @@ class StatisticController extends ValueNotifier<IStateSharedState> {
   final IStatisticService _statisticService;
   StatisticController(this._statisticService) : super(StateSharedState());
 
-  DateTime currentDate = DateTime.now();
-  StatisticResponseModel? statistics;
+  DateTime currentDate = DateTime.now().toUtc();
+  List<StatisticResponseModel> statistics = [];
 
   Future<void> init() async {
     value.stateIsLoading();
     notifyListeners();
     var response = await _statisticService.get(currentDate);
-    statistics = response.success();
+    statistics = response.success() ?? [];
     value.error = response.failure() ?? '';
     value.isLoading = false;
     notifyListeners();

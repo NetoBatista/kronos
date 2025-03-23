@@ -19,8 +19,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   HomeController controller = DependencyProvider.get();
   LogRequestModel request = LogRequestModel(
-    startDate: DateTime.now(),
-    endDate: DateTime.now(),
+    startDate: DateTime.now().toUtc(),
+    endDate: DateTime.now().toUtc(),
   );
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();

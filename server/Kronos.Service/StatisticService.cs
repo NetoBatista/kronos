@@ -14,42 +14,27 @@ public class StatisticService : IStatisticService
         _logRepository = logRepository;
     }
 
-    public async Task<StatisticResponseDto?> Get(StatisticRequestDto request)
+    public async Task<List<StatisticResponseDto>> Get(StatisticRequestDto request)
     {
         var logs = await _logRepository.Get(request);
         if (logs.Count == 0)
         {
-            return null;
+            return [];
         }
 
-        var response = new StatisticResponseDto();
-
-        response.Totals = logs.GroupBy(x => new
+        return logs.GroupBy(x => new
         {
             applicationId = x.ApplicationId,
-            applicationName = x.ApplicationNavigation.Name,
-        }).Select(x => new StatisticTotalLogItemResponseDto
+            applicationName = x.ApplicationNavigation.Name
+        }).Select(x => new StatisticResponseDto
         {
             ApplicationId = x.Key.applicationId,
             ApplicationName = x.Key.applicationName,
             Total = x.Count(),
-        }).OrderBy(x => x.ApplicationName)
-          .ToList();
-
-        response.CountTypes = logs.GroupBy(x => new
-        {
-            applicationId = x.ApplicationId,
-            applicationName = x.ApplicationNavigation.Name
-        }).Select(x => new StatisticCountTypeLogItemResponseDto
-        {
-            ApplicationId = x.Key.applicationId,
-            ApplicationName = x.Key.applicationName,
             CountSuccess = x.Count(log => log.Type == LogConstant.Success),
             CountInfo = x.Count(log => log.Type == LogConstant.Info),
             CountError = x.Count(log => log.Type == LogConstant.Error),
-        }).OrderBy(x => x.ApplicationName)
+        }).OrderByDescending(x => x.Total)
           .ToList();
-
-        return response;
     }
 }

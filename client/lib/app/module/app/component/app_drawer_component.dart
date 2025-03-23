@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kronos/app/core/provider/buildcontext_provider.dart';
 import 'package:kronos/app/module/app/component/app_drawer_custom_button_component.dart';
-import 'package:kronos/app/module/app/controller/app_controller.dart';
 import 'package:kronos/app/module/app/component/app_drawer_button_component.dart';
 import 'package:kronos/app/module/core/controller/theme_controller.dart';
 
@@ -40,11 +39,11 @@ class _AppDrawerComponentState extends State<AppDrawerComponent> {
             router: '/healthcheck/',
             icon: Icons.health_and_safety_outlined,
           ),
-          // AppDrawerButtonComponent(
-          //   title: 'Estatística',
-          //   router: '/statistic/',
-          //   icon: Icons.bar_chart_rounded,
-          // ),
+          AppDrawerButtonComponent(
+            title: 'Estatística',
+            router: '/statistic/',
+            icon: Icons.bar_chart_rounded,
+          ),
           Spacer(),
           if (isDarkMode)
             AppDrawerCustomButtonComponent(

@@ -4,5 +4,5 @@ namespace Kronos.Domain.Interface.Service;
 
 public interface IStatisticService
 {
-    Task<StatisticResponseDto?> Get(StatisticRequestDto request);
+    Task<List<StatisticResponseDto>> Get(StatisticRequestDto request);
 }
