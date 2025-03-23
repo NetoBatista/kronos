@@ -2,6 +2,10 @@
 
 public class StatisticResponseDto
 {
-    public List<StatisticTotalLogItemResponseDto> Totals { get; set; } = [];
-    public List<StatisticCountTypeLogItemResponseDto> CountTypes { get; set; } = [];
+    public Guid ApplicationId { get; set; }
+    public string ApplicationName { get; set; } = string.Empty;
+    public int Total { get; set; }
+    public int CountInfo { get; set; }
+    public int CountSuccess { get; set; }
+    public int CountError { get; set; }
 }

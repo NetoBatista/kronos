@@ -1,35 +1,40 @@
 import 'dart:convert';
 
-import 'package:kronos/app/core/model/statistic/statistic_count_type_response_model.dart';
-import 'package:kronos/app/core/model/statistic/statistic_total_response_model.dart';
-
 class StatisticResponseModel {
-  List<StatisticCountTypeResponseModel> countTypes;
-  List<StatisticTotalResponseModel> totals;
-  StatisticResponseModel({required this.countTypes, required this.totals});
+  String applicationId;
+  String applicationName;
+  int countError;
+  int countInfo;
+  int countSuccess;
+  int total;
+  StatisticResponseModel({
+    required this.applicationId,
+    required this.applicationName,
+    required this.countError,
+    required this.countInfo,
+    required this.countSuccess,
+    required this.total,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'countTypes': countTypes.map((x) => x.toMap()).toList(),
-      'totals': totals.map((x) => x.toMap()).toList(),
+      'applicationId': applicationId,
+      'applicationName': applicationName,
+      'countError': countError,
+      'countInfo': countInfo,
+      'countSuccess': countSuccess,
+      'total': total,
     };
   }
 
   factory StatisticResponseModel.fromMap(Map<String, dynamic> map) {
     return StatisticResponseModel(
-      countTypes: List<StatisticCountTypeResponseModel>.from(
-        (map['countTypes'] as List<dynamic>)
-            .map<StatisticCountTypeResponseModel>(
-              (x) => StatisticCountTypeResponseModel.fromMap(
-                x as Map<String, dynamic>,
-              ),
-            ),
-      ),
-      totals: List<StatisticTotalResponseModel>.from(
-        (map['totals'] as List<dynamic>).map<StatisticTotalResponseModel>(
-          (x) => StatisticTotalResponseModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      applicationId: map['applicationId'] as String,
+      applicationName: map['applicationName'] as String,
+      countError: map['countError'] as int,
+      countInfo: map['countInfo'] as int,
+      countSuccess: map['countSuccess'] as int,
+      total: map['total'] as int,
     );
   }
 
@@ -39,4 +44,9 @@ class StatisticResponseModel {
       StatisticResponseModel.fromMap(
         json.decode(source) as Map<String, dynamic>,
       );
+
+  static List<StatisticResponseModel> fromJsonList(String source) {
+    var data = json.decode(source) as List<dynamic>;
+    return data.map((e) => StatisticResponseModel.fromMap(e)).toList();
+  }
 }

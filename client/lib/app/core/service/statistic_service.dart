@@ -9,7 +9,7 @@ class StatisticService implements IStatisticService {
   StatisticService(this._requestService);
 
   @override
-  Future<Result<StatisticResponseModel, String>> get(
+  Future<Result<List<StatisticResponseModel>, String>> get(
     DateTime selectedDate,
   ) async {
     var query = "?StartDate=${selectedDate.year}-${selectedDate.month}-01";
@@ -20,6 +20,6 @@ class StatisticService implements IStatisticService {
     if (response.statusCode != 200) {
       return Failure('Ocorreu um erro ao buscar os dados');
     }
-    return Success(StatisticResponseModel.fromJson(response.body));
+    return Success(StatisticResponseModel.fromJsonList(response.body));
   }
 }
